@@ -1,4 +1,4 @@
-FROM ubuntu
+FROM scratch
 WORKDIR /home/weave
 ENTRYPOINT ["./server"]
 EXPOSE 80/tcp
