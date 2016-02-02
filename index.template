@@ -1,0 +1,23 @@
+<html>
+  <head>
+    <style>
+      body {
+        text-align: center;
+        background: #28283C;
+        color: #fff;
+        height: 100%
+      }
+      section {
+        position: relative;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+    </style>
+  </head>
+  <body>
+    <section>
+      <h1>Hello from host {{.}}</h1>
+      <img src="logo.png"/>
+    </section>
+  </body>
+</html>
