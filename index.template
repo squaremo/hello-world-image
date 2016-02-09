@@ -1,5 +1,12 @@
 <html>
   <head>
+    <title>Hello from {{.}}</title>
+  </head>
+  <body>
+    <section>
+      <h1>Hello from host {{.}}</h1>
+      <img src="logo.png"/>
+    </section>
     <style>
       body {
         text-align: center;
@@ -13,11 +20,5 @@
         transform: translateY(-50%);
       }
     </style>
-  </head>
-  <body>
-    <section>
-      <h1>Hello from host {{.}}</h1>
-      <img src="logo.png"/>
-    </section>
   </body>
 </html>
