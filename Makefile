@@ -12,8 +12,8 @@ image: .done
 	rm -rf ./build
 	mkdir -p ./build/src/$(PKG)
 	cp $^ ./build/src/$(PKG)/
-	CGO_ENABLED=0 GOPATH=$(PWD)/build go build -o $@ $(PKG)
+	GOOS=linux CGO_ENABLED=0 GOPATH=$(PWD)/build go build -o $@ $(PKG)
 
 .PHONY: clean
 clean:
-	rm -rf ./build
+	rm -rf ./build ./.done ./server
