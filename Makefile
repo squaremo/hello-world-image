@@ -1,12 +1,17 @@
 PKG=github.com/weaveworks/helloworld
 
-.PHONY: image
-image: .done
+.PHONY: images
+images: .latest.done .alpine.done
 
-.done: Dockerfile ./build/bin/server logo.png index.template
+.latest.done: Dockerfile ./build/bin/server logo.png index.template
 	cp ./build/bin/server ./
 	docker build -t weaveworks/hello-world .
-	touch .done
+	touch $@
+
+.alpine.done: Dockerfile.alpine ./build/bin/server logo.png index.template
+	cp ./build/bin/server ./
+	docker build -t weaveworks/hello-world:alpine -f Dockerfile.alpine .
+	touch $@
 
 ./build/bin/server: server.go
 	rm -rf ./build
