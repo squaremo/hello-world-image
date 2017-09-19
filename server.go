@@ -24,7 +24,9 @@ func main() {
 	http.HandleFunc("/", indexHandler)
 	http.HandleFunc("/logo.png", logoHandler)
 	log.Printf("Listening on port %d", port)
-	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%d", port), nil))
+	server := &http.Server{Addr: fmt.Sprintf(":%d", port)}
+	server.SetKeepAlivesEnabled(false)
+	log.Fatal(server.ListenAndServe())
 }
 
 func logoHandler(w http.ResponseWriter, r *http.Request) {
