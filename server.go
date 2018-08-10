@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"log"
 	"net/http"
@@ -15,6 +16,7 @@ const (
 
 var (
 	indexTmpl *template.Template
+	greeting  *string = flag.String("greeting", "Hello", "Word(s) with which to greet browsers")
 )
 
 func init() {
@@ -22,6 +24,7 @@ func init() {
 }
 
 func main() {
+	flag.Parse()
 	http.HandleFunc("/", indexHandler)
 	http.HandleFunc("/logo.png", logoHandler)
 	log.Printf("Listening on port %d", port)
@@ -34,11 +37,20 @@ func logoHandler(w http.ResponseWriter, r *http.Request) {
 	http.ServeFile(w, r, "logo.png")
 }
 
+type TemplateArgs struct {
+	Greeting string
+	Host     string
+	Time     string
+}
+
 func indexHandler(w http.ResponseWriter, r *http.Request) {
 	hostname, err := os.Hostname()
 	if err != nil {
 		http.Error(w, "Can't get hostname", 500)
 	}
-	str := fmt.Sprintf("%s at %v", hostname, time.Now().Format("15:04:05"))
-	indexTmpl.Execute(w, str)
+	indexTmpl.Execute(w, TemplateArgs{
+		Greeting: *greeting,
+		Host:     hostname,
+		Time:     time.Now().Format("15:04:05"),
+	})
 }
